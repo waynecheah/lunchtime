@@ -36,26 +36,11 @@ body {
     padding-bottom: 19px;
 }
 
-/* Custom page footer */
-.footer {
-    padding-top: 19px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
+.container {
+    overflow: hidden;
 }
-
 .container-narrow > hr {
     margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
 }
 
 
@@ -65,8 +50,11 @@ body {
     height: 100%;
 
     $dimen: 250px;
+    $border: 2px;
     $marginT: (640px - $dimen) / 2;
-    $marginL: (320px - $dimen) / 2;
+    $marginL: (360px - $dimen) / 2;
+    $actFont: 28px;
+
     .circleControl {
         width: $dimen;
         height: $dimen;
@@ -74,25 +62,76 @@ body {
         top: $marginT;
         left: $marginL;
         position: absolute;
-        border: 2px solid #aaa;
+        border: $border solid #aaa;
         border-radius: $dimen / 2;
-        background-color: #c0c0c0;
+        background-color: #f4f4c5;
 
         .sliderWrap {
             position: relative;
             width: 100%;
             height: 100%;
 
-            .slider {
+            .sliderUp {
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                top: $dimen;
+                top: $dimen - $border;
                 left: 0;
                 background-color: rgba(189, 241, 183, 0.50);
                 //-webkit-transition: top 1s;
             }
+            .sliderDown {
+                @extend .sliderUp;
+                top: $border - $dimen;
+                background-color: rgba(211, 96, 115, 0.50);
+            }
+            .actionName {
+                position: absolute;
+                width: 100%;
+                top: ($dimen / 2) - $actFont;
+                font-size: $actFont;
+                text-align: center;
+                color: rgba(0, 0, 0, 0);
+            }
+            .undo {
+                width: 100%;
+                top: ($dimen / 2) + $actFont;
+                font-size: 22px;
+                font-weight: 100;
+                position: absolute;
+                text-align: center;
+                text-decoration: underline;
+                -webkit-transition: display 200ms;
+            }
         }
+    }
+    .dragging {
+        border: 2px dashed #65a4ff;
+    }
+    .animateTop {
+        -webkit-transition: top 200ms;
+
+        .actionName {
+            -webkit-transition: color 200ms;
+        }
+    }
+    .animateLeft {
+        -webkit-transition: left 100ms;
+    }
+    .chosen {
+        background-color: #BDF1B7;
+    }
+    .getDown {
+        background-color: #D36073;
+    }
+
+    .previousCircle {
+        @extend .circleControl;
+        left: -250px;
+    }
+    .nextCircle {
+        @extend .circleControl;
+        left: 360px;
     }
 }
 

@@ -25,38 +25,32 @@
         
         <div class="container">
           <div class="header">
-            <ul class="nav nav-pills pull-right">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
             <h3 class="text-muted">polymer</h3>
           </div>
 
-          <div class="row" style="width:320px; height:640px; border:1px solid #ccc; position:relative; margin:auto;">
+          <div class="row" style="width:360px; height:640px; border:1px solid #ccc; position:relative; margin:auto;">
             <div class="page">
+              <div class="previousCircle"></div>
+
               <div class="circleControl">
                 <div class="sliderWrap">
-                  <div class="slider"></div>
+                  <div class="sliderUp"></div>
+                  <div class="sliderDown"></div>
+                  <div class="actionName"></div>
+                  <div class="undo" style="display:none;">Undo</div>
                 </div>
               </div>
+
+              <div class="nextCircle"></div>
             </div>
           </div>
 
-          <div class="jumbotron" style="margin-top:30px;">
-            <h1>'Allo, 'Allo!</h1>
-            <p class="lead">Always a pleasure scaffolding your apps.</p>
-            <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
-          </div>
-          <div class="footer">
-              <p>♥ from the Yeoman team</p>
-          </div>
         </div>
 
 
       <!-- build:js js/vendor.js -->
         <!-- bower:js -->
-      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/zeptojs/src/zepto.js"></script>
       <script src="bower_components/hammerjs/hammer.js"></script>
         <!-- endbower -->
       <!-- endbuild -->
