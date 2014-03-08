@@ -4,6 +4,7 @@ document.addEventListener 'WebComponentsReady', ->
 
 
 ds  = false # drag started
+pds = false # page drag started
 el  = $ '.circleControl'
 eTx = $ '.actionName' # text show in center of the circle
 elP = document.querySelector '.page'
@@ -27,35 +28,31 @@ hit = no
 txt = null
 
 hammerPage = Hammer(elP).on 'dragleft', (e) -> # next targets
-  return unless ds
+  return unless pds is yes
 
   left1 = lfC.left + e.gesture.deltaX
   left2 = lfR.left + e.gesture.deltaX
 
-  if left1 < acl
-    hit = yes
-    return
+  hit = if left1 < acl then 'left' else no
 
   ele.style.left = "#{left1}px"
   $('.nextCircle').css 'left', "#{left2}px"
 # END drag
 
 hammerPage = Hammer(elP).on 'dragright', (e) -> # back previous history
-  return unless ds
+  return unless pds is yes
 
   left1 = lfC.left + e.gesture.deltaX
   left2 = lfL.left + e.gesture.deltaX
 
-  if left1 > acr
-    hit = yes
-    return
+  hit = if left1 > acr then 'right' else no
 
   $('.circleControl').css 'left', "#{left1}px"
   $('.previousCircle').css 'left', "#{left2}px"
 # END drag
 
-Hammer(elP).on('dragstart', (e) ->
-  ds  = true
+Hammer(elP).on('dragstart', ->
+  pds = yes
   wdt = $('.circleControl').width()
   lfL = $('.previousCircle').position()
   lfC = $('.circleControl').position()
@@ -66,19 +63,41 @@ Hammer(elP).on('dragstart', (e) ->
   hit = no
 
   $('.previousCircle, .circleControl, .nextCircle').removeClass 'animateLeft'
-).on('dragend', (e) ->
+).on('dragend', ->
+  return unless pds is yes
+
+  fnReset = ->
+    $('.previousCircle').css 'left', "#{lfL.left}px"
+    $('.circleControl').css 'left', "#{lfC.left}px"
+    $('.nextCircle').css 'left', "#{lfR.left}px"
+    lfL = 0
+    lfC = 0
+    lfR = 0
+    return
+  # END fnReset
+
   $('.previousCircle, .circleControl, .nextCircle').addClass 'animateLeft'
 
-  $('.previousCircle').css 'left', "#{lfL.left}px"
-  $('.circleControl').css 'left', "#{lfC.left}px"
-  $('.nextCircle').css 'left', "#{lfR.left}px"
+  if hit is 'left' # goto next
+    $('.circleControl').css 'left', "#{lfL.left}px"
+    $('.nextCircle').css 'left', "#{lfC.left}px"
+  else if hit is 'right' # back to previous
+    $('.circleControl').css 'left', "#{lfR.left}px"
+    $('.previousCircle').css 'left', "#{lfC.left}px"
+  else
+    fnReset()
 
-  ds  = false;
+  if hit
+    setTimeout ->
+      $('.previousCircle, .circleControl, .nextCircle').removeClass 'animateLeft'
+      fnReset()
+      return
+    , 100
+
+  pds = no;
   wdt = 0
-  lfL = 0
-  lfC = 0
-  lfR = 0
-  pct = 0
+
+  el.removeClass 'dragging'
 )
 
 
@@ -96,7 +115,11 @@ hammertime = Hammer(ele).on 'dragup', (e) -> # choose
     eTx.html 'Take This One'
     txt = 'up'
 
-  return hit = yes if top2 < 1 # animate drop back effect to original position
+  if top2 < 1 # animate drop back effect to original position
+    hit = yes
+    return
+  else
+    hit = no
 
   ele.style.top = "#{top1}px"
   elU.style.top = "#{top2}px"
@@ -116,7 +139,11 @@ hammerdown = Hammer(ele).on 'dragdown', (e) -> # make disapper
     eTx.html 'Skip This One'
     txt = 'down'
 
-  return hit = yes if top2 > 0 # animate pull back effect to original position
+  if top2 > 0 # animate pull back effect to original position
+    hit = yes
+    return
+  else
+    hit = no
 
   ele.style.top = "#{top1}px"
   elD.style.top = "#{top2}px"
@@ -125,7 +152,7 @@ hammerdown = Hammer(ele).on 'dragdown', (e) -> # make disapper
 # END dragdown
 
 
-Hammer(ele).on('dragstart', (e) ->
+Hammer(ele).on('dragstart', ->
   ds  = true
   tp  = ele.offsetTop
   tpU = elU.offsetTop
@@ -139,8 +166,11 @@ Hammer(ele).on('dragstart', (e) ->
 
   el.addClass('dragging').removeClass 'animateTop chosen getDown'
   $('.undo').hide()
-).on('dragend', (e) ->
-  if hit
+).on('dragend', ->
+  console.log ds
+  return unless ds is true
+
+  if hit is yes
     if txt is 'up' then el.addClass 'chosen' else el.addClass 'getDown'
     $('.undo').show()
   else
