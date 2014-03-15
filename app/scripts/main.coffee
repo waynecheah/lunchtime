@@ -2,6 +2,24 @@ document.addEventListener 'WebComponentsReady', ->
   # Perform some behaviour
   return
 
+$('#mainmenu').mmenu
+  classes: 'mm-light'
+  dragOpen: true
+  header: true
+$('#groupMenu').mmenu
+  classes: 'mm-zoom-panels'
+  position: 'right'
+  zposition: 'front'
+  searchfield:
+    add: true
+    search: true
+    placeholder: 'Search Group'
+
+Hammer(document.querySelector '.icon-menu').on 'tap', ->
+  $('#mainmenu').trigger 'open'
+Hammer(document.querySelector '.icon-group').on 'tap', ->
+  $('#groupMenu').trigger 'open'
+
 window.onresize = ->
   console.log 'screen changed!'
   $('.dimension').css 'width', screen.width+'px'

@@ -13,14 +13,15 @@
 
         <!-- build:css styles/main.css -->
         <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" media="all" href="bower_components/jQuery.mmenu/src/css/jquery.mmenu.all.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild-->
     </head>
     <body>
 
-        <nav id="location" class="sidepanel hide">
+        <nav id="mainmenu" class="sidepanel">
           <ul>
-            <li class="Label"><span class="ico"> Account Details</span></li>
+            <li><span class="ico"> Account Details</span></li>
             <li>
               <span class="ico"> Matching Preference</span>
               <ul>
@@ -56,10 +57,9 @@
             </li>
           </ul>
         </nav>
-        <nav id="main-menu" class="sidepanel hide">
+        <nav id="groupMenu" class="sidepanel">
           <ul>
-            <li class="Selected"><a href="#">Home</a></li>
-            <li class="search">Search Groups</li>
+            <li class="Selected"><a href="#" class="icon-plus"> Create New</a></li>
             <li>
               <a href="#">Group name 1</a>
               <em class="Counter">5</em>
@@ -73,16 +73,16 @@
 
 
         <div class="container">
-          <div class="header"></div>
+          <div class="header0"></div>
 
           <div class="dimension">
             <div class="background"></div>
             <div class="viewpoint">
               <div class="page">
                 <div class="row pageHeader">
-                  <div class="col-xs-3">menu</div>
+                  <div class="col-xs-3"><div class="left icon-menu"></div></div>
                   <div class="col-xs-6 text-center title">LUNCHTIME</div>
-                  <div class="col-xs-3 text-right">group</div>
+                  <div class="col-xs-3 text-right"><div class="right icon-group"></div></div>
                 </div>
 
                 <div class="previousCircle"></div>
@@ -107,9 +107,10 @@
                 </div>
                 <div class="decisionsWrap">
                   <div class="decisions">
-                    <div class="like text-center">Like</div>
-                    <div class="eat">LunchTime</div>
-                    <div class="dislike text-center">Dislike</div>
+                    <div class="like text-center"><span class="icon-ok"></span></div>
+                    <div class="eat text-center"><div>Lunch Time</div></div>
+                    <div class="dislike text-center"><span class="icon-close"></span></div>
+                    <div style="clear:both;"></div>
                   </div>
                 </div>
               </div>
@@ -121,7 +122,8 @@
 
       <!-- build:js js/vendor.js -->
         <!-- bower:js -->
-      <script src="bower_components/zeptojs/src/zepto.js"></script>
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/jQuery.mmenu/src/js/jquery.mmenu.min.all.js"></script>
       <script src="bower_components/hammerjs/hammer.js"></script>
         <!-- endbower -->
       <!-- endbuild -->
