@@ -12,38 +12,110 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild-->
-
-        <!-- Place your HTML imports here -->
-        <script src="bower_components/platform/platform.js"></script>
-        <link rel="import" href="elements/list.html">
-        <link rel="import" href="elements/greeting.html">
     </head>
     <body>
 
-        
+        <nav id="location" class="sidepanel hide">
+          <ul>
+            <li class="Label"><span class="ico"> Account Details</span></li>
+            <li>
+              <span class="ico"> Matching Preference</span>
+              <ul>
+                <li>
+                  <span class="ico"> Radius</span>
+                </li>
+                <li>
+                  <span class="ico"> Travel method</span>
+                </li>
+                <li>
+                  <span class="ico"> Halal</span>
+                </li>
+                <li>
+                  <span class="ico"> Vegetarian</span>
+                </li>
+                <li>
+                  <em class="Counter">5</em>
+                  <a href="#" class="ico"> Seafood</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="ico"> Places</span>
+            </li>
+            <li>
+              <a href="#" class="ico"> Suggest Location</a>
+            </li>
+            <li>
+              <a href="#" class="ico"> History</a>
+            </li>
+            <li>
+              <a href="#" class="ico"> Discover</a>
+            </li>
+          </ul>
+        </nav>
+        <nav id="main-menu" class="sidepanel hide">
+          <ul>
+            <li class="Selected"><a href="#">Home</a></li>
+            <li class="search">Search Groups</li>
+            <li>
+              <a href="#">Group name 1</a>
+              <em class="Counter">5</em>
+            </li>
+            <li>
+              <a href="#">Group name 2</a>
+              <em class="Counter">7</em>
+            </li>
+          </ul>
+        </nav>
+
+
         <div class="container">
+          <div class="header"></div>
 
-          <div class="row viewpoint" style="width:320px; height:568px;">
-            <div class="header"></div>
+          <div class="dimension">
+            <div class="background"></div>
+            <div class="viewpoint">
+              <div class="page">
+                <div class="row pageHeader">
+                  <div class="col-xs-3">menu</div>
+                  <div class="col-xs-6 text-center title">LUNCHTIME</div>
+                  <div class="col-xs-3 text-right">group</div>
+                </div>
 
-            <div class="page">
-              <div class="previousCircle"></div>
+                <div class="previousCircle"></div>
 
-              <div class="circleControl">
-                <div class="sliderWrap">
-                  <div class="sliderUp"></div>
-                  <div class="sliderDown"></div>
-                  <div class="actionName"></div>
-                  <div class="undo" style="display:none;">Undo</div>
+                <div class="circleControl">
+                  <div class="sliderWrap">
+                    <div class="sliderUp"></div>
+                    <div class="sliderDown"></div>
+                    <div class="actionName"></div>
+                    <div class="undo" style="display:none;">Undo</div>
+                  </div>
+                </div>
+
+                <div class="nextCircle"></div>
+
+                <div class="actionsWrap">
+                  <div class="actions">
+                    <div class="fbLikes text-center">FB Likes</div>
+                    <div class="space">&nbsp;</div>
+                    <div class="details text-center">View Details</div>
+                  </div>
+                </div>
+                <div class="decisionsWrap">
+                  <div class="decisions">
+                    <div class="like text-center">Like</div>
+                    <div class="eat">LunchTime</div>
+                    <div class="dislike text-center">Dislike</div>
+                  </div>
                 </div>
               </div>
-
-              <div class="nextCircle"></div>
             </div>
-          </div>
 
+          </div>
         </div>
 
 

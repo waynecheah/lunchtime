@@ -2,6 +2,13 @@ document.addEventListener 'WebComponentsReady', ->
   # Perform some behaviour
   return
 
+window.onresize = ->
+  console.log 'screen changed!'
+  $('.dimension').css 'width', screen.width+'px'
+  $('.dimension').css 'height', screen.height+'px'
+  return
+
+
 
 ds  = false # drag started
 pds = false # page drag started
