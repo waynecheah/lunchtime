@@ -6,9 +6,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Polymer WebApp</title>
+        <title>LunchTime MobileApp</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimal-ui">
+        <meta http-equiv="cleartype" content="on">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css styles/main.css -->
@@ -85,18 +88,23 @@
                   <div class="col-xs-3 text-right"><div class="right icon-group"></div></div>
                 </div>
 
-                <div class="previousCircle"></div>
+                <div class="previousCircle">
+                  <div class="circleContent">Choice -1</div>
+                </div>
 
                 <div class="circleControl">
                   <div class="sliderWrap">
                     <div class="sliderUp"></div>
                     <div class="sliderDown"></div>
+                    <div class="circleContent">What's for lunch</div>
                     <div class="actionName"></div>
                     <div class="undo" style="display:none;">Undo</div>
                   </div>
                 </div>
 
-                <div class="nextCircle"></div>
+                <div class="nextCircle">
+                  <div class="circleContent">Choice 1</div>
+                </div>
 
                 <div class="actionsWrap">
                   <div class="actions">

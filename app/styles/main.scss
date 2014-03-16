@@ -91,10 +91,10 @@ body {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: url(../images/bg.jpg) no-repeat fixed center center;
+            background: url(../images/bg-blur.jpg) no-repeat fixed center center;
             background-clip: padding-box;
             background-size: 100% 100%;
-            -webkit-filter: blur(4px);
+            //-webkit-filter: blur(4px);
         }
         .viewpoint {
             position: absolute;
@@ -112,7 +112,7 @@ body {
                     .actions {
                         width: 230px;
                         margin: auto;
-                        color: #5E5E5E;
+                        color: #fff;
                         line-height: 33px;
 
                         div {
@@ -283,6 +283,16 @@ body {
         background-color: #D36073;
     }
 
+    .previousCircle, .circleControl, .nextCircle {
+        .circleContent {
+            position: absolute;
+            width: 100%;
+            top: ($dimen / 2) - 26px;
+            font-size: 26px;
+            text-align: center;
+            color: blue;
+        }
+    }
     .previousCircle {
         @extend .circleControl;
         left: -250px;

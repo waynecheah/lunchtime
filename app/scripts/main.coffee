@@ -3,8 +3,7 @@ document.addEventListener 'WebComponentsReady', ->
   return
 
 $('#mainmenu').mmenu
-  classes: 'mm-light'
-  dragOpen: true
+  classes: 'mm-light mm-zoom-menu'
   header: true
 $('#groupMenu').mmenu
   classes: 'mm-zoom-panels'
@@ -22,8 +21,16 @@ Hammer(document.querySelector '.icon-group').on 'tap', ->
 
 window.onresize = ->
   console.log 'screen changed!'
+  cir  = $('.circleControl').outerWidth()
+  left = (screen.width - cir) / 2
+  top  = (screen.height - cir) / 2
+  $('.nextCircle').css 'left', "700px" if screen.height < 361
   $('.dimension').css 'width', screen.width+'px'
   $('.dimension').css 'height', screen.height+'px'
+  $('.previousCircle, .nextCircle').css 'top', "#{top}px"
+  $('.circleControl').css
+    top: "#{top}px"
+    left: "#{left}px"
   return
 
 
@@ -49,8 +56,34 @@ wdt = 0 # width circle width
 acl = 0 # action taken when circle control almost reach left side
 acr = 0 # action taken when circle control almost reach right side
 pct = 0 # percentage
+pst = no # position
 hit = no
 txt = null
+cnt = 0
+
+gotoNextRecord = ->
+  number  = cnt + 2
+  content = $('.nextCircle .circleContent').html()
+  prevCon = if cnt is 0 then "What's for lunch" else "Choice #{cnt}"
+  nextCon = if cnt is -2 then "What's for lunch" else "Choice #{number}"
+  $('.circleControl .circleContent').html content
+  $('.previousCircle .circleContent').html prevCon
+  $('.nextCircle .circleContent').html nextCon
+  cnt++
+  return
+# END gotoNextRecord
+
+gotoPrevRecord = ->
+  number  = cnt - 2
+  content = $('.previousCircle .circleContent').html()
+  prevCon = if cnt is 2 then "What's for lunch" else "Choice #{number}"
+  nextCon = if cnt is 0 then "What's for lunch" else "Choice #{cnt}"
+  $('.circleControl .circleContent').html content
+  $('.previousCircle .circleContent').html prevCon
+  $('.nextCircle .circleContent').html nextCon
+  cnt--
+  return
+# END gotoPrevRecord
 
 hammerPage = Hammer(elP).on 'dragleft', (e) -> # next targets
   return unless pds is yes
@@ -58,7 +91,7 @@ hammerPage = Hammer(elP).on 'dragleft', (e) -> # next targets
   left1 = lfC.left + e.gesture.deltaX
   left2 = lfR.left + e.gesture.deltaX
 
-  hit = if left1 < acl then 'left' else no
+  pst = if left1 < acl then 'left' else no
 
   ele.style.left = "#{left1}px"
   $('.nextCircle').css 'left', "#{left2}px"
@@ -70,7 +103,7 @@ hammerPage = Hammer(elP).on 'dragright', (e) -> # back previous history
   left1 = lfC.left + e.gesture.deltaX
   left2 = lfL.left + e.gesture.deltaX
 
-  hit = if left1 > acr then 'right' else no
+  pst = if left1 > acr then 'right' else no
 
   $('.circleControl').css 'left', "#{left1}px"
   $('.previousCircle').css 'left', "#{left2}px"
@@ -85,16 +118,20 @@ Hammer(elP).on('dragstart', ->
   acl = (wdt / 3) * 2
   acl = acl - (acl * 2)
   acr = $('.page').width() - ((wdt / 3) * 1)
-  hit = no
+  pst = no
 
   $('.previousCircle, .circleControl, .nextCircle').removeClass 'animateLeft'
 ).on('dragend', ->
   return unless pds is yes
 
-  fnReset = ->
+  fnReset = (position) ->
     $('.previousCircle').css 'left', "#{lfL.left}px"
     $('.circleControl').css 'left', "#{lfC.left}px"
     $('.nextCircle').css 'left', "#{lfR.left}px"
+
+    gotoNextRecord() if position is 'left'
+    gotoPrevRecord() if position is 'right'
+
     lfL = 0
     lfC = 0
     lfR = 0
@@ -103,19 +140,23 @@ Hammer(elP).on('dragstart', ->
 
   $('.previousCircle, .circleControl, .nextCircle').addClass 'animateLeft'
 
-  if hit is 'left' # goto next
+  if pst is 'left' # goto next
     $('.circleControl').css 'left', "#{lfL.left}px"
     $('.nextCircle').css 'left', "#{lfC.left}px"
-  else if hit is 'right' # back to previous
+  else if pst is 'right' # back to previous
     $('.circleControl').css 'left', "#{lfR.left}px"
     $('.previousCircle').css 'left', "#{lfC.left}px"
   else
-    fnReset()
+    fnReset null
 
-  if hit
+  if pst
     setTimeout ->
+      el.removeClass 'animateTop chosen getDown'
+      eTx.css 'color', "rgba(0, 0, 0, 0)"
+      $('.undo').hide()
+
       $('.previousCircle, .circleControl, .nextCircle').removeClass 'animateLeft'
-      fnReset()
+      fnReset pst
       return
     , 100
 
@@ -177,7 +218,7 @@ hammerdown = Hammer(ele).on 'dragdown', (e) -> # make disapper
 # END dragdown
 
 
-Hammer(ele).on('dragstart', ->
+Hammer(ele).on('dragstart', (e) ->
   ds  = true
   tp  = ele.offsetTop
   tpU = elU.offsetTop
@@ -190,6 +231,7 @@ Hammer(ele).on('dragstart', ->
   #console.log 'start '+e.gesture.center.pageY
 
   el.addClass('dragging').removeClass 'animateTop chosen getDown'
+  $('.circleContent').hide() if e.gesture.direction is 'up' or e.gesture.direction is 'down'
   $('.undo').hide()
 ).on('dragend', ->
   console.log ds
@@ -199,6 +241,7 @@ Hammer(ele).on('dragstart', ->
     if txt is 'up' then el.addClass 'chosen' else el.addClass 'getDown'
     $('.undo').show()
   else
+    $('.circleContent').show()
     eTx.css 'color', 'rgba(0, 0, 0, 0)'
 
   el.addClass 'animateTop'
