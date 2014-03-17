@@ -13,6 +13,18 @@ $('#groupMenu').mmenu
     search: true
     placeholder: 'Search Group'
 
+$.each $('.pt-page .ln'), (i, el) ->
+  Hammer(el).on 'tap', -> # Animate each page change
+    pages = $(@).attr('data-page').split '-'
+    tabNo = $(@).attr('data-tab')
+
+    if pages[0] and pages[1]
+      reverse = if pages[2] is 'r' then yes else no
+      tabNo   = if pages[3] then pages[3] else null
+      changePage pages[0], pages[1], reverse, tabNo
+    return
+  return
+
 Hammer(document.querySelector '.icon-menu').on 'tap', ->
   setTimeout ->
     $('#mainmenu').trigger 'open'
@@ -72,6 +84,48 @@ fsp = no # fast swap position
 hit = no
 txt = null
 cnt = 0
+transition =
+  fxOut: 'pt-page-moveToLeft'
+  fxIn: 'pt-page-moveFromRight'
+  fxRevOut: 'pt-page-moveToRight'
+  fxRevIn: 'pt-page-moveFromLeft'
+
+changePage = (from, to, reverse, tabNo, ts=transition) ->
+  fPage = "div.pt-page-#{from}"
+  tPage = "div.pt-page-#{to}"
+  fxIn  = if reverse then ts.fxRevIn else ts.fxIn
+  fxOut = if reverse then ts.fxRevOut else ts.fxOut
+
+  sHeight = $(window).height() # get screen height
+  $("#{tPage} div.body")
+  .css 'min-height', "#{sHeight}px" # make page body to have same height as the screen
+
+  fixedHeader = $('#fixHeader div.header')
+  if fixedHeader.length > 0 # if there is any content in current fixed header
+    hdPage = fixedHeader.attr 'data-page' # first to find where is it original page came from
+    $("div.pt-page-#{hdPage}")
+    .prepend fixedHeader # then put the header back tp the page
+
+  $(window).trigger 'changePage', [from, to]
+  $(fPage).addClass "pt-page-current #{fxOut}"
+  $(tPage).addClass "pt-page-current #{fxIn} pt-page-ontop"
+
+  setTimeout () -> # when transition is done
+    $("#{tPage} div.body").css 'min-height', 200
+
+    $(fPage).removeClass "pt-page-current #{fxOut}"
+    $(tPage).removeClass "#{fxIn} pt-page-ontop"
+
+    header = $("#{tPage} div.header")
+    if header.length > 0 # if there is any content in destination header
+      $('#fixHeader').html(header).show() # first to migrate the header content from original page to fixed header
+      $('#fixHeader div.header').attr 'data-page', to # and don't forget to tell where this header original came from
+
+    return
+  , 400
+
+  return
+# END changePage
 
 gotoNextRecord = ->
   number  = cnt + 2

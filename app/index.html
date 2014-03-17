@@ -17,6 +17,7 @@
         <!-- build:css styles/main.css -->
         <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" media="all" href="bower_components/jQuery.mmenu/src/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="styles/animations.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild-->
     </head>
@@ -84,9 +85,9 @@
 
           <div class="dimension">
             <div class="background"></div>
-            <div class="viewpoint">
+            <div id="pt-main" class="viewpoint pt-perspective">
 
-              <div class="page">
+              <div class="page pt-page pt-page-1 pt-page-current">
                 <div class="pageHeader">
                   <div class="col-xs-3"><div class="left icon-menu"></div></div>
                   <div class="col-xs-6 text-center title">LUNCHTIME</div>
@@ -114,8 +115,8 @@
                 <div class="actionsWrap">
                   <div class="actions">
                     <div class="fbLikes text-center">FB Likes</div>
-                    <div class="space">&nbsp;</div>
-                    <div class="details text-center">View Details</div>
+                    <div class="ln space">&nbsp;</div>
+                    <div data-page="1-2" class="ln details text-center">View Details</div>
                   </div>
                 </div>
                 <div class="decisionsWrap">
@@ -128,7 +129,7 @@
                 </div>
               </div>
 
-              <div style="display:none;" class="page">
+              <div class="page pt-page pt-page-2">
                 <div class="pageHeader">
                   <div class="col-xs-3"><div class="left icon-menu2"></div></div>
                   <div class="col-xs-6 text-center title">LUNCHTIME</div>
@@ -142,6 +143,9 @@
                       <div style="border:2px solid #ccc; height:150px;background: url(images/bg.jpg) no-repeat center center;
                         background-clip: padding-box; background-size: 100% 100%;">
                       </div>
+                      <div data-page="2-1-r" class="ln text-center"
+                      style="width:60%; margin:10px auto 0; padding:3px; color:white;
+                      background-color:rgba(255,255,255,.5); border-radius:20px;">Back to main page</div>
                     </div>
                     <div class="col-xs-1"></div>
                   </div>
