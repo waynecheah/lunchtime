@@ -37,7 +37,7 @@ $dimen: 200px;
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-group:before {
+.icon-group:before, .icon-group2:before {
     content: "\e600";
 }
 .icon-ok:before {
@@ -55,7 +55,7 @@ $dimen: 200px;
 .icon-search:before {
     content: "\e605";
 }
-.icon-menu:before {
+.icon-menu:before, .icon-menu2:before {
     content: "\e609";
 }
 .icon-plus:before {
@@ -178,22 +178,23 @@ body {
     }
 
     .pageHeader {
+        position: absolute;
+        width: 100%;
         background-color: rgba(216, 212, 212, 0.5);
         line-height: 39px;
+        z-index: 10;
 
         .left, .right {
             font-size: 30px;
             line-height: 30px;
         }
         .left {
-            padding-left: 10px;
             margin-top: 4px;
         }
         .title {
             font-size: 20px;
         }
         .right {
-            padding-right: 10px;
             margin-top: 3px;
         }
     }
@@ -209,7 +210,7 @@ body {
     height: 100%;
 
     $border: 3px;
-    $marginT: ($height - $dimen) / 2;
+    $marginT: ($height - $dimen - 120px) / 2;
     $marginL: ($width - $dimen) / 2;
     $actFont: 28px;
 
